@@ -15,3 +15,23 @@ mykernel.bin: linker.ld $(objects)
 	
 install: mykernel.bin
 	sudo cp $< /boot/mykernel.bin #copying mykernel.bin to the given path.
+
+mykernel.iso: mykernel.bin
+	mkdir iso
+	mkdir iso/boot
+	mkdir iso/boot/grub
+	cp $< iso/boot/
+	echo  'set timeout=0' >> iso/boot/grub/grub.cfg
+	echo  'set default=0' >> iso/boot/grub/grub.cfg
+	echo  '' >> iso/boot/grub/grub.cfg
+	echo  'menuentry "My OS" {' >> iso/boot/grub/grub.cfg
+	echo  '   multiboot /boot/mykernel.bin' >> iso/boot/grub/grub.cfg
+	echo  '   boot' >> iso/boot/grub/grub.cfg
+	echo  '}' >> iso/boot/grub/grub.cfg
+	grub-mkrescue --output=$@ iso #mkrescue to create a disk image. 
+	rm -rf iso #after creating disk image we dont need iso directory so we delete it.
+
+run: mykernel.iso
+	(killall VirtualBox && sleep 1) || true   #sleep 1 bcz killall is slow so before killing it, new Vm might start so we wait for few seconds
+	VirtualBox --startvm 'my OS'  & # & is for making it a background process
+
