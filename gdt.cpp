@@ -2,11 +2,11 @@
 #include "gdt.h"
 
 //initializing constructor
-GlobalDescriptorTable::GlobalDescriptorTable()
+GlobalDescriptorTable::GlobalDescriptorTable() //a skeleton of Gdt class is created
 : nullSegmentSelector(0,0,0),
 unusedSegmentSelector(0,0,0),
 codeSegmentSelector(0,64*1024*1024, 0x9A), //start at 0, takes 64MBs for segment size
-dataSegmentSelector(0,64*1024*1024, 0x92) //all this creates the table
+dataSegmentSelector(0,64*1024*1024, 0x92) //all this populates the table
 
 //telling processor to use the table
 {

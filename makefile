@@ -2,7 +2,7 @@ GPPPARAMS = -m32 -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-excep
 ASPARAMS = --32 
 LDPARAMS = -melf_i386
 
-objects = loader.o gdt.o kernel.o
+objects = loader.o gdt.o port.o kernel.o
 
 %.o: %.cpp
 	g++ $(GPPPARAMS) -o $@ -c $<  # call g++ wd params, opt shoudl be target file($@) and we wanna compile (-c) the ipt file ($<). 
@@ -35,3 +35,7 @@ run: mykernel.iso
 	(killall VirtualBox && sleep 1) || true   #sleep 1 bcz killall is slow so before killing it, new Vm might start so we wait for few seconds
 	VirtualBox --startvm 'my OS'  & # & is for making it a background process
 
+.PHONY: clean
+clean:
+	rm -f $(objects) mykernel.bin mykernel.iso
+	
