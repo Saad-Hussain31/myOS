@@ -10,7 +10,7 @@ dataSegmentSelector(0,64*1024*1024, 0x92) //all this populates the table
 
 //telling processor to use the table
 {
-    uint32_t i[2]; //we have 8 bytes or 32 bits
+    uint32_t i[2]; //we have 8 bytes or 64 bits
     i[0] = (uint32_t)this; //these 1st 4 bytes is the addr of table itself
     i[1] = sizeof(GlobalDescriptorTable) << 16; //these 4 bytes are hi-bytes of seg integer
 
