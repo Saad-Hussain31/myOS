@@ -1,8 +1,9 @@
 #include "types.h"
 #include "port.h"
 
+/*Implementing Class 1.
+Constructor: initializing object with provided portnumber.*/
 
-//constructor
 Port::Port(uint16_t portnumber)
 {
     this->portnumber = portnumber;
@@ -12,7 +13,10 @@ Port::~Port()
 {
 }
 
-//const of 8bit port
+//Implementation of Class 1 ends here.
+
+//Implementing Class 2.
+
 Port8Bit::Port8Bit(uint16_t portnumber)
 : Port(portnumber)
 {
@@ -34,7 +38,9 @@ uint8_t Port8Bit::Read()
     return result;
 }
 
-//----------------//
+//Implementation of Class 2 ends here.
+
+//Implementing Class 2.5.
 
 Port8BitSlow::Port8BitSlow(uint16_t portnumber)
 : Port8Bit(portnumber)
@@ -50,10 +56,9 @@ void Port8BitSlow::Write(uint8_t data)
     __asm__ volatile("outb %0, %1\njmp 1f\n1: jmp 1f\n1:" : : "a" (data), "Nd" (portnumber));
 }
 
+//Implementation of Class 2.5 ends here.
 
-//----------------//
-
-
+//Implementing Class 3.
 
 Port16Bit::Port16Bit(uint16_t portnumber)
 : Port(portnumber)
@@ -76,9 +81,9 @@ uint16_t Port16Bit::Read()
     return result;
 }
 
+//Implementation of Class 3 ends here.
 
-//-------------------//
-
+//Implementing Class 4.
 
 Port32Bit::Port32Bit(uint32_t portnumber)
 : Port(portnumber)
@@ -100,4 +105,4 @@ uint32_t Port32Bit::Read()
     __asm__ volatile("inl %1, %0" : "=a" (result) : "Nd" (portnumber));
     return result;
 }
-
+//Implementation of Class 4 ends here.
