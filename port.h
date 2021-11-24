@@ -3,17 +3,19 @@
 #include "types.h"
 
 
-/*purely virtual port base class which knows its port num. 
-Constructor is also protected bcz we dont want it to be
+/* Class 1:purely virtual Port base class which knows its port num. 
+Constructor is also protected bcz I dont want it to be
 instantiated. */ 
 class Port 
 {
-protected: //coz
+protected: 
 	uint16_t portnumber;
 	Port(uint16_t portnumber);
 	~Port();
 };
 
+
+// Class 2: Used by multiplexers to read & write 8-bits integers. 
 class Port8Bit : public Port
 {
 public:
@@ -23,18 +25,18 @@ public:
 	virtual uint8_t Read();
 };
 
-//also 8bit but slower so it needs it own write()
+//also 8bits but slower so it needs it's own write()
 class Port8BitSlow : public Port8Bit
 {
 public:
 	Port8BitSlow(uint16_t portnumber);
 	~Port8BitSlow();
 	virtual void Write(uint8_t data);
-	//we inherit read() so not overriding it
+	//I will inherit read() so not overriding it
 };
 
 
-
+// Class 3: Used by multiplexers to read & write 16-bits integers.
 class Port16Bit : public Port
 {
 public:
@@ -44,6 +46,7 @@ public:
 	virtual uint16_t Read();
 };
 
+// Class 4: Used by multiplexers to read & write 32-bits integers.
 
 class Port32Bit : public Port
 {
