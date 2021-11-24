@@ -28,6 +28,8 @@ Port8Bit::~Port8Bit()
 
 void Port8Bit::Write(uint8_t data)
 {
+    /*volatile means the variable can be modified from outside. 
+      It also stops the compiler from optimizing the code. */
     __asm__ volatile("outb %0, %1" : : "a" (data), "Nd" (portnumber));
 }
 
