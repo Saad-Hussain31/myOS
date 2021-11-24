@@ -25,7 +25,7 @@ public:
 	virtual uint8_t Read();
 };
 
-//also 8bits but slower so it needs it's own write()
+//Class 2.5:also 8bits but slower so it needs it's own write()
 class Port8BitSlow : public Port8Bit
 {
 public:
