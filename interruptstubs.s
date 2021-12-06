@@ -1,8 +1,28 @@
+.set IRQ_BASE, 0X20 
 .section .text
 
 
 .extern _ZN16InterruptManager15handleInterruptEhj #this comes from making obj file.
 
+
+
+.macro HandleException num
+.global _ZN16InterruptManager16handleInterruptRequest\num\()Ev #this creates the implementation of forwarded declared funcs in interrupts.h
+    movb $\num, (interruptnumber)
+    jmp int_bottom
+.endm
+
+
+.macro HandleInterruptRequest num
+.global _ZN16InterruptManager26handleInterruptRequest\num\()Ev #this creates the implementation of forwarded declared funcs in interrupts.h
+    movb $\num + IRQ_BASE, (interruptnumber) #adding content of compiler variable to the num
+    jmp int_bottom
+.endm
+
+
+
+HandleInterruptRequest 0x00 
+HandleInterruptRequest 0x01
 
 int_bottom: # given esp, itll jump in handleIntr func 
 
