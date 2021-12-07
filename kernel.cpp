@@ -1,5 +1,6 @@
 #include "gdt.h"
 #include "types.h"
+#include "interrupts.h"
 void printf(char* str)
 {
 	unsigned short* VideoMemory = (uint16_t*)0xb8000;
@@ -44,5 +45,7 @@ extern "C" void kernelMain(void*  multiboot_structure, uint32_t /*multiboot_magi
 	printf("Hello World, this is my Operating system\n");
 	printf("Hello World, this is my Operating system\n");
 	GlobalDescriptorTable gdt;
+	InterruptManager interrupts(&gdt);
+	interrupts.Activate();
 	while(1); //inf loop to prevent kernel from stopping
 }

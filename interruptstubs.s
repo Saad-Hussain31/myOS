@@ -3,18 +3,20 @@
 
 
 .extern _ZN16InterruptManager15handleInterruptEhj #this comes from making obj file.
-
+.global _ZN16InterruptManager22IgnoreInterruptRequestEv
 
 
 .macro HandleException num
-.global _ZN16InterruptManager16handleInterruptRequest\num\()Ev #this creates the implementation of forwarded declared funcs in interrupts.h
+.global _ZN16InterruptManager16HandleInterruptRequest\num\()Ev #this creates the implementation of forwarded declared funcs in interrupts.h
+_ZN16InterruptManager16HandleInterruptRequest\num\()Ev:
     movb $\num, (interruptnumber)
     jmp int_bottom
 .endm
 
 
 .macro HandleInterruptRequest num
-.global _ZN16InterruptManager26handleInterruptRequest\num\()Ev #this creates the implementation of forwarded declared funcs in interrupts.h
+.global _ZN16InterruptManager26HandleInterruptRequest\num\()Ev #this creates the implementation of forwarded declared funcs in interrupts.h
+_ZN16InterruptManager26HandleInterruptRequest\num\()Ev:    
     movb $\num + IRQ_BASE, (interruptnumber) #adding content of compiler variable to the num
     jmp int_bottom
 .endm
@@ -46,6 +48,8 @@ int_bottom: # given esp, itll jump in handleIntr func
     popl %es
     popl %ds
     popa
+
+_ZN16InterruptManager22IgnoreInterruptRequestEv:
 
 #telling processor that interrupt handling is finished
     iret
