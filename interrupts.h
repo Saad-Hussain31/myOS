@@ -29,8 +29,8 @@ class InterruptManager
         uint8_t interruptNumber,
         uint16_t codeSegmentSelectorOffset,
         void (*handler) (), //pointer to handler
-        uint8_t DescriptorPrivilegeLevel, //for access rights
-        uint8_t DescriptorType //for flags
+        uint8_t DescriptorPrivilegeLevel, 
+        uint8_t DescriptorType 
     );
 
     //we have to tell PIC to send us interrupt
